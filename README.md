@@ -1,7 +1,7 @@
-Stock Additions 0.7.7
+Prius Additions 0.7.7
 =====
 
-This branch is simply stock openpilot with some additions to help it drive as smooth as possible on my 2017 Toyota Corolla w/ comma pedal.
+This branch is stock openpilot with additions to help it drive as smooth as possible with a 2020 Prius and 2017 Toyota Corolla w/ comma pedal.
 
 Want to request a feature or create a bug report? [Open an issue here!](https://github.com/ShaneSmiskol/openpilot/issues/new/choose)
 
@@ -99,7 +99,7 @@ Customize this fork (opEdit)
 This is a handy tool to change your `opParams` parameters without diving into any json files or code. You can specify parameters to be used in any fork's operation that supports `opParams`. First, ssh in to your EON and make sure you're in `/data/openpilot`, then start `opEdit`:
 ```python
 cd /data/openpilot
-python op_edit.py  # or ./op_edit.py
+python op_edit.py
 ```
 
 [To see what features opEdit has, click me!](/OPEDIT_FEATURES.md)
@@ -126,6 +126,7 @@ Here are the main parameters you can change with this fork:
 - **Experimental params**:
   - `support_white_panda`: This allows users with the original white panda to use openpilot above 0.7.7. The high precision localizer's performance may be reduced due to a lack of GPS
   - `prius_use_lqr`: If you have a newer Prius with a good angle sensor, you can try enabling this to use LQR
+  - 'op_full_speed_fan': Set this option to True to enable full fan speed
 
 A full list of parameters that you can modify are [located here](common/op_params.py#L40).
 
