@@ -123,7 +123,7 @@ else:
   # fan speed options
   _FAN_SPEEDS = [0, 16384, 32768, 65535]
   # max fan speed only allowed if battery is hot
-_BAT_TEMP_THERSHOLD = 40.
+  _BAT_TEMP_THERSHOLD = 40.
 
 
 def handle_fan_eon(max_cpu_temp, bat_temp, fan_speed, ignition):
