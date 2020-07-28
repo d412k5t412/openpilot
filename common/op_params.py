@@ -66,6 +66,7 @@ class opParams:
                            'support_white_panda': {'default': False, 'allowed_types': [bool], 'description': 'Enable this to allow engagement with the deprecated white panda.\n'
                                                                                                              'localizer might not work correctly'},
                            'prius_use_lqr': {'default': False, 'allowed_types': [bool], 'description': 'If you have a newer Prius with a good angle sensor, you can try enabling this to use LQR'},
+                           'op_full_speed_fan': {'default': False, 'allowed_types': [bool], 'description': 'Set this to true for max fan speed'},
 
 
                            'op_edit_live_mode': {'default': False, 'allowed_types': [bool], 'description': 'This parameter controls which mode opEdit starts in. It should be hidden from the user with the hide key', 'hide': True}}

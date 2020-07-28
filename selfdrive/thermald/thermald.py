@@ -12,6 +12,7 @@ from common.params import Params, put_nonblocking
 from common.realtime import sec_since_boot, DT_TRML
 from common.numpy_fast import clip, interp
 from common.filter_simple import FirstOrderFilter
+from common.op_params import opParams
 from selfdrive.version import terms_version, training_version
 from selfdrive.swaglog import cloudlog
 import cereal.messaging as messaging
@@ -22,6 +23,7 @@ from selfdrive.thermald.power_monitoring import PowerMonitoring, get_battery_cap
 
 FW_SIGNATURE = get_expected_signature()
 
+op_full_speed_fan = opParams().get('op_full_speed_fan', False)
 ThermalStatus = log.ThermalData.ThermalStatus
 NetworkType = log.ThermalData.NetworkType
 NetworkStrength = log.ThermalData.NetworkStrength
@@ -114,9 +116,13 @@ def set_eon_fan(val):
 _TEMP_THRS_H = [50., 65., 80., 10000]
 # temp thresholds to control fan speed - low hysteresis
 _TEMP_THRS_L = [42.5, 57.5, 72.5, 10000]
-# fan speed options
-_FAN_SPEEDS = [0, 16384, 32768, 65535]
-# max fan speed only allowed if battery is hot
+if op_full_speed_fan
+  _FAN_SPEEDS = [65535, 65535, 65535, 65535]
+  _BAT_TEMP_THERSHOLD = 0.
+else:
+  # fan speed options
+  _FAN_SPEEDS = [0, 16384, 32768, 65535]
+  # max fan speed only allowed if battery is hot
 _BAT_TEMP_THERSHOLD = 40.
 
 
