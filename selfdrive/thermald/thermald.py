@@ -116,7 +116,7 @@ def set_eon_fan(val):
 _TEMP_THRS_H = [50., 65., 80., 10000]
 # temp thresholds to control fan speed - low hysteresis
 _TEMP_THRS_L = [42.5, 57.5, 72.5, 10000]
-if op_full_speed_fan
+if op_full_speed_fan:
   _FAN_SPEEDS = [65535, 65535, 65535, 65535]
   _BAT_TEMP_THERSHOLD = 0.
 else:
