@@ -68,11 +68,11 @@ class CarInterface(CarInterfaceBase):
         ret.lateralTuning.lqr.dcGain = 0.002237852961363602
       else:
         ret.lateralTuning.init('indi')
-        ret.lateralTuning.indi.innerLoopGain = 3.84
-        ret.lateralTuning.indi.outerLoopGain = 3.0
+        ret.lateralTuning.indi.innerLoopGain = 3.86
+        ret.lateralTuning.indi.outerLoopGain = 3.2
         ret.lateralTuning.indi.timeConstant = 0.1
         ret.lateralTuning.indi.actuatorEffectiveness = 0.99
-        ret.steerActuatorDelay = 0.42
+        ret.steerActuatorDelay = 0.44
 
     elif candidate in [CAR.RAV4, CAR.RAV4H]:
       stop_and_go = True if (candidate in CAR.RAV4H) else False
