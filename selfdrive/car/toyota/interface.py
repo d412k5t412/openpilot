@@ -68,8 +68,8 @@ class CarInterface(CarInterfaceBase):
         ret.lateralTuning.lqr.dcGain = 0.002237852961363602
       else:
         ret.lateralTuning.init('indi')
-        ret.lateralTuning.indi.innerLoopGain = 3.9
-        ret.lateralTuning.indi.outerLoopGain = 3.6
+        ret.lateralTuning.indi.innerLoopGain = 4.0
+        ret.lateralTuning.indi.outerLoopGain = 3.0
         ret.lateralTuning.indi.timeConstant = 0.1
         ret.lateralTuning.indi.actuatorEffectiveness = 0.98
         ret.steerActuatorDelay = 0.40
@@ -297,7 +297,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.6], [0.1]]
       ret.lateralTuning.pid.kf = 0.00006
 
-    ret.steerRateCost = 1.
+    ret.steerRateCost = 0.5
     ret.centerToFront = ret.wheelbase * 0.44
 
     # TODO: get actual value, for now starting with reasonable value for
