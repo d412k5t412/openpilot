@@ -151,8 +151,13 @@ Quick Installation
 -----
 To install Stock Additions, just run the following on your EON/C2 (make sure to press enter after each line):
 
+With Backup
 ```
 cd /data; cp -rf ./openpilot ./openpilot.bak; rm -rf ./openpilot; git clone https://github.com/d412k5t412/openpilot.git openpilot; cd openpilot; git checkout prius_additions
+```
+Without Backup
+```
+cd /data; rm -rf ./openpilot; git clone https://github.com/d412k5t412/openpilot.git openpilot; cd openpilot; git checkout prius_additions
 ```
 
 The `--depth 1` flag shallow clones the fork, it ends up being about 90 Mb so you can get the fork up and running quickly. Once you install Stock Additions, [automatic updating](#Automatic-updates) should always keep openpilot up to date with the latest from my fork!
