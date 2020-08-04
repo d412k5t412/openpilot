@@ -66,10 +66,10 @@ class CarInterface(CarInterfaceBase):
         ret.lateralTuning.lqr.dcGain = 0.002237852961363602
       else:
         ret.lateralTuning.init('indi')
-        ret.lateralTuning.indi.innerLoopGain = 4.2
+        ret.lateralTuning.indi.innerLoopGain = 4.1
         ret.lateralTuning.indi.outerLoopGain = 3.0
         ret.lateralTuning.indi.timeConstant = 0.1
-        ret.lateralTuning.indi.actuatorEffectiveness = 1.1
+        ret.lateralTuning.indi.actuatorEffectiveness = 0.99
         ret.steerActuatorDelay = 0.40
 
     elif candidate in [CAR.RAV4, CAR.RAV4H]:
