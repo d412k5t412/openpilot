@@ -12,6 +12,7 @@ from common.params import Params, put_nonblocking
 from common.realtime import sec_since_boot, DT_TRML
 from common.numpy_fast import clip, interp
 from common.filter_simple import FirstOrderFilter
+from common.op_params import opParams
 from selfdrive.version import terms_version, training_version
 from selfdrive.swaglog import cloudlog
 import cereal.messaging as messaging
@@ -22,6 +23,7 @@ from selfdrive.thermald.power_monitoring import PowerMonitoring, get_battery_cap
 
 FW_SIGNATURE = get_expected_signature()
 
+op_full_speed_fan = opParams().get('op_full_speed_fan', False)
 ThermalStatus = log.ThermalData.ThermalStatus
 NetworkType = log.ThermalData.NetworkType
 NetworkStrength = log.ThermalData.NetworkStrength
@@ -114,10 +116,14 @@ def set_eon_fan(val):
 _TEMP_THRS_H = [50., 65., 80., 10000]
 # temp thresholds to control fan speed - low hysteresis
 _TEMP_THRS_L = [42.5, 57.5, 72.5, 10000]
-# fan speed options
-_FAN_SPEEDS = [0, 16384, 32768, 65535]
-# max fan speed only allowed if battery is hot
-_BAT_TEMP_THERSHOLD = 45.
+if op_full_speed_fan:
+  _FAN_SPEEDS = [65535, 65535, 65535, 65535]
+  _BAT_TEMP_THERSHOLD = 0.
+else:
+  # fan speed options
+  _FAN_SPEEDS = [0, 16384, 32768, 65535]
+  # max fan speed only allowed if battery is hot
+  _BAT_TEMP_THERSHOLD = 40.
 
 
 def handle_fan_eon(max_cpu_temp, bat_temp, fan_speed, ignition):
@@ -274,10 +280,10 @@ def thermald_thread():
     # If device is offroad we want to cool down before going onroad
     # since going onroad increases load and can make temps go over 107
     # We only do this if there is a relay that prevents the car from faulting
-    if max_cpu_temp > 107. or bat_temp >= 63. or (has_relay and (started_ts is None) and max_cpu_temp > 70.0):
+    if max_cpu_temp > 107.0 or bat_temp > 62.0 or (has_relay and (started_ts is None) and (max_cpu_temp > 65.0 or bat_temp > 60.)):
       # onroad not allowed
       thermal_status = ThermalStatus.danger
-    elif max_comp_temp > 96.0 or bat_temp > 60.:
+    elif max_comp_temp > 96.0 or bat_temp > 60.0:
       # hysteresis between onroad not allowed and engage not allowed
       thermal_status = clip(thermal_status, ThermalStatus.red, ThermalStatus.danger)
     elif max_cpu_temp > 94.0:
@@ -366,16 +372,18 @@ def thermald_thread():
     if not fw_version_match and fw_version_match_prev:
       put_nonblocking("Offroad_PandaFirmwareMismatch", json.dumps(OFFROAD_ALERTS["Offroad_PandaFirmwareMismatch"]))
 
-    # if any CPU gets above 107 or the battery gets above 63, kill all processes
+    # if any CPU gets above 107 / battery gets above 63 / offroad but temperature is high from past run , kill all processes
     # controls will warn with CPU above 95 or battery above 60
     if thermal_status >= ThermalStatus.danger:
       should_start = False
-      if thermal_status_prev < ThermalStatus.danger:
+      if thermal_status_prev >= ThermalStatus.red:              # show warning if tempeature gets too high
         put_nonblocking("Offroad_TemperatureTooHigh", json.dumps(OFFROAD_ALERTS["Offroad_TemperatureTooHigh"]))
     else:
       if thermal_status_prev >= ThermalStatus.danger:
         params.delete("Offroad_TemperatureTooHigh")
-
+      if thermal_status_prev >= thermal_status and thermal_status < ThermalStatus.danger: 
+        params.delete("Offroad_TemperatureTooHigh")              # remove warning when temperature is good and decreasing
+        
     if should_start:
       if not should_start_prev:
         params.delete("IsOffroad")

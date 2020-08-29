@@ -1,7 +1,8 @@
-Stock Additions 0.7.7
-===
+=====
+Prius Additions 0.7.7
+=====
 
-Stock Additions is a fork of openpilot designed to be minimal in UI design while boasting various feature additions and behavior improvements over stock. I have a 2017 Toyota Corolla with comma pedal, so most of my changes are designed to improve the longitudinal performance.
+This branch is stock openpilot with additions to help it drive as smooth as possible with a 2020 Prius and 2017 Toyota Corolla w/ comma pedal.
 
 Want to request a feature or create a bug report? [Open an issue here!](https://github.com/ShaneSmiskol/openpilot/issues/new/choose)
 
@@ -116,7 +117,7 @@ Customize this fork (opEdit)
 This is a handy tool to change your `opParams` parameters without diving into any json files or code. You can specify parameters to be used in any fork's operation that supports `opParams`. First, ssh in to your EON and make sure you're in `/data/openpilot`, then start `opEdit`:
 ```python
 cd /data/openpilot
-python op_edit.py  # or ./op_edit.py
+python op_edit.py
 ```
 
 [To see what features opEdit has, click me!](/OPEDIT_FEATURES.md)
@@ -176,11 +177,13 @@ Quick Installation
 ---
 To install Stock Additions, just run the following on your EON/C2 (make sure to press enter after each line):
 
+With Backup
 ```
-cd /data/
-mv openpilot openpilot.old  # or equivalent
-git clone -b stock_additions --single-branch https://github.com/shanesmiskol/openpilot --depth 1
-reboot
+cd /data; cp -rf ./openpilot ./openpilot.bak; rm -rf ./openpilot; git clone https://github.com/d412k5t412/openpilot.git openpilot; cd openpilot; git checkout prius_additions
+```
+Without Backup
+```
+cd /data; rm -rf ./openpilot; git clone https://github.com/d412k5t412/openpilot.git openpilot; cd openpilot; git checkout prius_additions
 ```
 
 The `--depth 1` flag shallow clones the fork, it ends up being about 90 Mb so you can get the fork up and running quickly. Once you install Stock Additions, [automatic updating](#Automatic-updates) should always keep openpilot up to date with the latest from my fork!
