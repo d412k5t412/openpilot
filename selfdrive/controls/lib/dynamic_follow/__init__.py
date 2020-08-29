@@ -48,7 +48,7 @@ class DynamicFollow:
 
   def _setup_collector(self):
     self.sm_collector = SubMaster(['liveTracks', 'laneSpeed'])
-    self.log_auto_df = self.op_params.get('log_auto_df', False)
+    self.log_auto_df = self.op_params.get('log_auto_df')
     if not isinstance(self.log_auto_df, bool):
       self.log_auto_df = False
     self.data_collector = DataCollector(file_path='/data/df_data', keys=['v_ego', 'a_ego', 'a_lead', 'v_lead', 'x_lead', 'left_lane_speeds', 'middle_lane_speeds', 'right_lane_speeds', 'left_lane_distances', 'middle_lane_distances', 'right_lane_distances', 'profile', 'time'], log_data=self.log_auto_df)
@@ -131,7 +131,7 @@ class DynamicFollow:
 
   def _change_cost(self, libmpc):
     TRs = [0.9, 1.8, 2.7]
-    costs = [1.25, 0.2, 0.075]
+    costs = [1.15, 0.15, 0.05]
     cost = interp(self.TR, TRs, costs)
 
     change_time = sec_since_boot() - self.profile_change_time
@@ -144,7 +144,7 @@ class DynamicFollow:
       cost *= interp(cost_mod, cost_mod_speeds, cost_mods)
 
     if self.last_cost != cost:
-      libmpc.change_tr(MPC_COST_LONG.TTC, cost, MPC_COST_LONG.ACCELERATION, MPC_COST_LONG.JERK)
+      libmpc.change_costs(MPC_COST_LONG.TTC, cost, MPC_COST_LONG.ACCELERATION, MPC_COST_LONG.JERK)
       self.last_cost = cost
 
   def _store_df_data(self):
@@ -195,13 +195,16 @@ class DynamicFollow:
         a_ego = (self.df_data.v_rels[-1]['v_ego'] - self.df_data.v_rels[0]['v_ego']) / elapsed_time
         a_lead = (self.df_data.v_rels[-1]['v_lead'] - self.df_data.v_rels[0]['v_lead']) / elapsed_time
 
-    mods_x = [0, -.75, -1.5]
-    mods_y = [1.5, 1.25, 1]
+    mods_x = [-1.5, -.75, 0]
+    mods_y = [1, 1.25, 1.3]
     if a_lead < 0:  # more weight to slight lead decel
       a_lead *= interp(a_lead, mods_x, mods_y)
 
+    if a_lead - a_ego > 0:  # return only if adding distance
+      return 0
+
     rel_x = [-2.6822, -1.7882, -0.8941, -0.447, -0.2235, 0.0, 0.2235, 0.447, 0.8941, 1.7882, 2.6822]
-    mod_y = [0.3245 * 1.25, 0.277 * 1.2, 0.11075 * 1.15, 0.08106 * 1.075, 0.06325 * 1.05, 0.0, -0.09, -0.09375, -0.125, -0.3, -0.35]
+    mod_y = [0.3245 * 1.1, 0.277 * 1.08, 0.11075 * 1.06, 0.08106 * 1.045, 0.06325 * 1.035, 0.0, -0.09, -0.09375, -0.125, -0.3, -0.35]
     return interp(a_lead - a_ego, rel_x, mod_y)
 
   def global_profile_mod(self, profile_mod_x, profile_mod_pos, profile_mod_neg, x_vel, y_dist):
@@ -209,7 +212,7 @@ class DynamicFollow:
     This function modifies the y_dist list used by dynamic follow in accordance with global_df_mod
     It also intelligently adjusts the profile mods at each breakpoint based on the change in TR
     """
-    if self.global_df_mod is None:
+    if self.global_df_mod == 1.:
       return profile_mod_pos, profile_mod_neg, y_dist
     global_df_mod = 1 - self.global_df_mod
 
@@ -284,7 +287,7 @@ class DynamicFollow:
     y = [0.24, 0.16, 0.092, 0.0515, 0.0305, 0.022, 0.0, -0.0153, -0.042, -0.053, -0.059]  # modification values
     TR_mods.append(interp(self.lead_data.a_lead, x, y))
 
-    # deadzone = 7.5 * CV.MPH_TO_MS
+    # deadzone = self.car_data.v_ego / 3  # 10 mph at 30 mph  # todo: tune pedal to react similarly to without before adding/testing this
     # if self.lead_data.v_lead - deadzone > self.car_data.v_ego:
     #   TR_mods.append(self._relative_accel_mod())
 
@@ -319,12 +322,10 @@ class DynamicFollow:
     self.car_data.cruise_enabled = CS.cruiseState.enabled
 
   def _get_live_params(self):
-    self.global_df_mod = self.op_params.get('global_df_mod', None)
-    if self.global_df_mod is not None:
+    self.global_df_mod = self.op_params.get('global_df_mod')
+    if self.global_df_mod != 1.:
       self.global_df_mod = clip(self.global_df_mod, 0.85, 1.2)
 
-    self.min_TR = self.op_params.get('min_TR', None)
-    if self.min_TR is not None:
-      self.min_TR = clip(self.min_TR, 0.85, 1.3)
-    else:
-      self.min_TR = 0.9  # default
+    self.min_TR = self.op_params.get('min_TR')
+    if self.min_TR != 1.:
+      self.min_TR = clip(self.min_TR, 0.85, 1.6)

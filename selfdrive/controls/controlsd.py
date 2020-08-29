@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 import os
 import gc
+import requests
+import threading
 from cereal import car, log
+from selfdrive.crash import client
 from common.android import ANDROID, get_sound_card_online
 from common.numpy_fast import clip
 from common.realtime import sec_since_boot, set_realtime_priority, set_core_affinity, Ratekeeper, DT_CTRL
@@ -39,6 +42,15 @@ LaneChangeDirection = log.PathPlan.LaneChangeDirection
 EventName = car.CarEvent.EventName
 
 
+def log_fingerprint(candidate, timeout=30):
+  try:
+    requests.get('https://sentry.io', timeout=timeout)
+    client.captureMessage("fingerprinted {}".format(candidate), level='info')
+    return
+  except:
+    pass
+
+
 class Controls:
   def __init__(self, sm=None, pm=None, can_sock=None):
     gc.disable()
@@ -60,8 +72,8 @@ class Controls:
 
     self.op_params = opParams()
     self.df_manager = dfManager(self.op_params)
-    self.hide_auto_df_alerts = self.op_params.get('hide_auto_df_alerts', False)
-    self.support_white_panda = self.op_params.get('support_white_panda', False)
+    self.hide_auto_df_alerts = self.op_params.get('hide_auto_df_alerts')
+    self.support_white_panda = self.op_params.get('support_white_panda')
     self.last_model_long = False
 
     self.can_sock = can_sock
@@ -76,6 +88,7 @@ class Controls:
     messaging.get_one_can(self.can_sock)
 
     self.CI, self.CP, candidate = get_car(self.can_sock, self.pm.sock['sendcan'], has_relay)
+    threading.Thread(target=log_fingerprint, args=[candidate]).start()
 
     # read params
     params = Params()
@@ -484,7 +497,7 @@ class Controls:
     if len(meta.desirePrediction) and ldw_allowed:
       l_lane_change_prob = meta.desirePrediction[Desire.laneChangeLeft - 1]
       r_lane_change_prob = meta.desirePrediction[Desire.laneChangeRight - 1]
-      CAMERA_OFFSET = self.op_params.get('camera_offset', 0.06)
+      CAMERA_OFFSET = self.op_params.get('camera_offset')
       l_lane_close = left_lane_visible and (self.sm['pathPlan'].lPoly[3] < (1.08 - CAMERA_OFFSET))
       r_lane_close = right_lane_visible and (self.sm['pathPlan'].rPoly[3] > -(1.08 + CAMERA_OFFSET))
 
