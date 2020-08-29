@@ -25,7 +25,6 @@ Highlight Features
 Documentation
 ===
 * [**Quick Installation**](#Quick-installation)
-* [**Branches**](#Branches)
 * [**Videos**](#Videos)
 
 ---
