@@ -19,6 +19,7 @@ class LatPIDController():
     self._k_i = k_i  # integral gain
     self._k_d = [list(k_d[0]), list(k_d[1])]  # derivative gain
     self.k_f = k_f  # feedforward gain
+    self.op_params = opParams()
 
     self.pos_limit = pos_limit
     self.neg_limit = neg_limit
@@ -33,15 +34,15 @@ class LatPIDController():
 
   @property
   def k_p(self):
-    return interp(self.speed, self._k_p[0], self._k_p[1])
+    return interp(self.speed, self._k_p[0], self._k_p[1]) * self.op_params.get('lat_p_multiplier')
 
   @property
   def k_i(self):
-    return interp(self.speed, self._k_i[0], self._k_i[1])
+    return interp(self.speed, self._k_i[0], self._k_i[1]) * self.op_params.get('lat_i_multiplier')
 
   @property
   def k_d(self):
-    return interp(self.speed, self._k_d[0], self._k_d[1])
+    return interp(self.speed, self._k_d[0], self._k_d[1]) * self.op_params.get('lat_d_multiplier')
 
   def _check_saturation(self, control, check_saturation, error):
     saturated = (control < self.neg_limit) or (control > self.pos_limit)
@@ -70,7 +71,7 @@ class LatPIDController():
     error = float(apply_deadzone(setpoint - measurement, deadzone))
     self.p = error * self.k_p
     d = self.k_d * (error - self.last_error)
-    self.f = feedforward * self.k_f
+    self.f = feedforward * self.k_f * self.op_params.get('lat_f_multiplier')
 
     if override:
       self.i -= self.i_unwind_rate * float(np.sign(self.i))
