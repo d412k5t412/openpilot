@@ -93,8 +93,8 @@ class opParams:
                         'prius_use_pid': Param(False, bool, 'This enables the PID lateral controller with new a experimental derivative tune\nFalse: stock INDI, True: TSS2-tuned PID'),
                         'corolla_use_lqr': Param(False, bool, 'Enable this to use LQR for lateral control with your TSS1 Corolla\nFalse: PID, True: RAV4-tuned LQR'),
                         'corollaTSS2_use_indi': Param(False, bool, 'Enable this to use INDI for lat with your Corolla with TSS2'),
-                        'lat_p_multiplier': Param(1, VT.number, 'Multiplier for proportional. 1 is current tune', live=True),
-                        'lat_i_multiplier': Param(1, VT.number, 'Multiplier for integral. 1 is current tune', live=True),
+                        'lat_p_multiplier': Param(1, VT.number, 'Proportional tuning. 0.22 is corolla default', live=True),
+                        'lat_i_multiplier': Param(1, VT.number, 'Integral tuning. 0.04125 is corolla default', live=True),
                         'lat_d_multiplier': Param(1, VT.number, 'Multiplier for derivative. 1 is current tune', live=True),
                         'lat_f_multiplier': Param(1, VT.number, 'Multiplier for feedforward. 1 is current tune', live=True)}
 
