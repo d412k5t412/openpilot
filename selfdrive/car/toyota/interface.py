@@ -62,7 +62,7 @@ class CarInterface(CarInterfaceBase):
       stop_and_go = True
       ret.safetyParam = 50  # see conversion factor for STEER_TORQUE_EPS in dbc file
       ret.wheelbase = 2.70
-      ret.steerRatio = 13.8   # unknown end-to-end spec
+      ret.steerRatio = 13.1   # unknown end-to-end spec
       tire_stiffness_factor = 0.6371   # hand-tune
       ret.mass = 3045. * CV.LB_TO_KG + STD_CARGO_KG
 
@@ -71,7 +71,7 @@ class CarInterface(CarInterfaceBase):
         ret.lateralTuning.pid.kdBP = [0.]
         ret.lateralTuning.pid.kdV = [0.85]
         ret.lateralTuning.pid.kf = 0.000078  # full torque for 20 deg at 80mph means 0.00007818594
-        ret.steerActuatorDelay = 0.5
+        ret.steerActuatorDelay = 0.57
       else:
         ret.lateralTuning.init('indi')
         ret.lateralTuning.indi.innerLoopGain = 4.0
