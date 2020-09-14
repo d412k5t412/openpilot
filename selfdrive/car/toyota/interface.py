@@ -67,17 +67,17 @@ class CarInterface(CarInterfaceBase):
       ret.mass = 3045. * CV.LB_TO_KG + STD_CARGO_KG
 
       if prius_use_pid:
-        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.38], [0.02]]  # todo: parametertize by zss
+        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.16], [0.021]]  # todo: parametertize by zss
         ret.lateralTuning.pid.kdBP = [0.]
-        ret.lateralTuning.pid.kdV = [0.85]
-        ret.lateralTuning.pid.kf = 0.000068  # full torque for 20 deg at 80mph means 0.00007818594
+        ret.lateralTuning.pid.kdV = [0.80]
+        ret.lateralTuning.pid.kf = 0.000078  # full torque for 20 deg at 80mph means 0.00007818594
       else:
         ret.lateralTuning.init('indi')
         ret.lateralTuning.indi.innerLoopGain = 4.0
         ret.lateralTuning.indi.outerLoopGain = 3.0
-        ret.lateralTuning.indi.timeConstant = 0.1 if ret.hasZss else 1.0
+        ret.lateralTuning.indi.timeConstant = 0.4
         ret.lateralTuning.indi.actuatorEffectiveness = 1.0
-        ret.steerActuatorDelay = 0.5
+        ret.steerActuatorDelay = 0.57
 
     elif candidate in [CAR.RAV4, CAR.RAV4H]:
       stop_and_go = True if (candidate in CAR.RAV4H) else False
