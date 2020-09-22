@@ -63,33 +63,28 @@ class CarInterface(CarInterfaceBase):
       stop_and_go = True
       ret.safetyParam = 50  # see conversion factor for STEER_TORQUE_EPS in dbc file
       ret.wheelbase = 2.70
-      ret.steerRatio = 14.22   # unknown end-to-end spec
+      ret.steerRatio = 15.74   # unknown end-to-end spec
       tire_stiffness_factor = 0.6371   # hand-tune
       ret.mass = 3045. * CV.LB_TO_KG + STD_CARGO_KG
 
-      if prius_use_pid:
-        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.38], [0.02]]  # todo: parametertize by zss
-        ret.lateralTuning.pid.kdV = [0.85]
-        ret.lateralTuning.pid.kf = 0.000068  # full torque for 20 deg at 80mph means 0.00007818594
-      else:
-        ret.lateralTuning.init('indi')
-        ret.lateralTuning.indi.innerLoopGain = 4.0
-        ret.lateralTuning.indi.outerLoopGain = 3.0
-        ret.lateralTuning.indi.timeConstant = 0.1 if ret.hasZss else 1.0
-        ret.lateralTuning.indi.actuatorEffectiveness = 1.0
-        ret.steerActuatorDelay = 0.5
+      ret.lateralTuning.init('indi')
+      ret.lateralTuning.indi.innerLoopGain = 4.0
+      ret.lateralTuning.indi.outerLoopGain = 3.0
+      ret.lateralTuning.indi.timeConstant = 0.1 if ret.hasZss else 1.0
+      ret.lateralTuning.indi.actuatorEffectiveness = 1.0
+      ret.steerActuatorDelay = 0.5
 
     elif candidate == CAR.PRIUS_2020:
       stop_and_go = True
       ret.safetyParam = 54
       ret.wheelbase = 2.6924
       ret.steerRatio = 15.74  # unknown end-to-end spec
+      ret.steerActuatorDelay = 0.55
       tire_stiffness_factor = 0.6371  # hand-tune
       ret.mass = 3115. * CV.LB_TO_KG + STD_CARGO_KG
-
-      ret.steerActuatorDelay = 0.55
+      
       if prius_use_pid:
-        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.37], [0.1]]
+        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.36], [0.1]]
         ret.lateralTuning.pid.kdV = [2.]  # corolla D times gain in PI values
         ret.lateralTuning.pid.kf = 0.00007818594
       else:
