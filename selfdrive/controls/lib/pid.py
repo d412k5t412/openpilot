@@ -37,10 +37,12 @@ class LatPIDController():
     # return interp(self.speed, self._k_p[0], self._k_p[1])
 
   @property
+  def k_i(self):
     return self.op_params.get('lat_i_gain')
     # return interp(self.speed, self._k_i[0], self._k_i[1])
 
   @property
+  def k_d(self):
     return self.op_params.get('lat_d_gain')
     # return interp(self.speed, self._k_d[0], self._k_d[1])
 
