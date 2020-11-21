@@ -108,7 +108,9 @@ class opParams:
                                                                        'low: overpower, saturation, jerky, fast oscillation', live=True),
                         'steerActuatorDelay': Param(0.1, VT.number, 'Delay from sending torque to angle change', live=True),
                         # 'steerRateCost': Param(1, VT.number, 'Steer rate cost. Higher is higher, etc.', live=True),
-
+                        'lat_p_gain': Param(.22, VT.number, 'proportional', live=True),
+                        'lat_i_gain': Param(.005, VT.number, 'integral', live=True),
+                        'lat_d_gain': Param(1, VT.number, 'derivative', live=True),
                         'prius_use_pid': Param(False, bool, 'This enables the PID lateral controller with new a experimental derivative tune\nFalse: stock INDI, True: TSS2-tuned PID'),
                         'use_lqr': Param(False, bool, 'Enable this to use LQR as your lateral controller over default with any car'),
                         'corollaTSS2_use_indi': Param(False, bool, 'Enable this to use INDI for lat with your Corolla with TSS2'),
