@@ -77,7 +77,7 @@ class CarInterface(CarInterfaceBase):
         ret.lateralTuning.pid.kf = 0.00009531750004645412
         ret.lateralTuning.pid.newKfTuned = True
       
-      if prius_use_communityINDI:
+      if pruisTSS1_use_communityindi:
         ret.lateralTuning.init('indi')
         ret.lateralTuning.indi.innerLoopGain = 4.0
         ret.lateralTuning.indi.outerLoopGainBP = [20, 21, 25, 26]
