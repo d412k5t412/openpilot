@@ -99,7 +99,8 @@ class opParams:
                         'corollaTSS2_use_indi': Param(False, bool, 'Enable this to use INDI for lat with your TSS2 Corolla'),
                         'rav4TSS2_use_indi': Param(False, bool, 'Enable this to use INDI for lat with your TSS2 RAV4'),
                         'pruisTSS1_use_communityindi': Param(False, bool, 'Enable this to use community INDI for lat with your TSS1 Pruis'),
-                        'standstill_hack': Param(False, bool, 'Some cars support stop and go, you just need to enable this')}
+                        'standstill_hack': Param(False, bool, 'Some cars support stop and go, you just need to enable this'),
+                        'steerActuatorDelay': Param(0.1, VT.number, 'Delay from sending torque to angle change', live=True)}
 
     self._params_file = '/data/op_params.json'
     self._backup_file = '/data/op_params_corrupt.json'
