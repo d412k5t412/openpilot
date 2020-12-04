@@ -67,7 +67,7 @@ class CarInterface(CarInterfaceBase):
       ret.safetyParam = 54
       ret.wheelbase = 2.6924
       ret.steerRatio = 13.4  # unknown end-to-end spec
-      ret.steerActuatorDelay = 0.54
+      ret.steerActuatorDelay = 0.52
       tire_stiffness_factor = 0.6371  # hand-tune
       ret.mass = 3115. * CV.LB_TO_KG + STD_CARGO_KG
 
@@ -79,11 +79,11 @@ class CarInterface(CarInterfaceBase):
       
       if pruisTSS1_use_communityindi:
         ret.lateralTuning.init('indi')
-        ret.lateralTuning.indi.innerLoopGain = 4.0
+        ret.lateralTuning.indi.innerLoopGain = 5.0
         ret.lateralTuning.indi.outerLoopGainBP = [20, 21, 25, 26]
         ret.lateralTuning.indi.outerLoopGainV = [2.6, 3.0, 3.2, 3.8]
         ret.lateralTuning.indi.timeConstant = 0.1 if ret.hasZss else 1.47
-        ret.lateralTuning.indi.actuatorEffectiveness = 2.0
+        ret.lateralTuning.indi.actuatorEffectiveness = 1.0
       else:
         ret.lateralTuning.init('indi')
         ret.lateralTuning.indi.innerLoopGain = 4.0
