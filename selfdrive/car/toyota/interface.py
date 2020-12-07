@@ -79,7 +79,7 @@ class CarInterface(CarInterfaceBase):
       
       if pruisTSS1_use_communityindi:
         ret.lateralTuning.init('indi')
-        ret.lateralTuning.indi.innerLoopGain = 5.0
+        ret.lateralTuning.indi.innerLoopGain = 4.4
         ret.lateralTuning.indi.outerLoopGainBP = [20, 21, 25, 26]
         ret.lateralTuning.indi.outerLoopGainV = [2.6, 3.0, 3.2, 3.8]
         ret.lateralTuning.indi.timeConstant = 0.1 if ret.hasZss else 1.47
