@@ -10,6 +10,7 @@ from common.params import Params
 import cereal.messaging as messaging
 from cereal import log
 from common.op_params import opParams
+from common.numpy_fast import interp
 
 LaneChangeState = log.PathPlan.LaneChangeState
 LaneChangeDirection = log.PathPlan.LaneChangeDirection
@@ -173,7 +174,8 @@ class PathPlanner():
     self.LP.update_d_poly(v_ego, angle_steers, active)
 
     # account for actuation delay
-    self.cur_state = calc_states_after_delay(self.cur_state, v_ego, angle_steers - angle_offset, curvature_factor, VM.sR, CP.steerActuatorDelay)
+    steer_act_delay = interp(v_ego, [17.8816, 18], [0.55, 0.57])
+    self.cur_state = calc_states_after_delay(self.cur_state, v_ego, angle_steers - angle_offset, curvature_factor, VM.sR, steer_act_delay)
 
     v_ego_mpc = max(v_ego, 5.0)  # avoid mpc roughness due to low speed
     self.libmpc.run_mpc(self.cur_state, self.mpc_solution,
