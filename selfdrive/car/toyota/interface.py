@@ -65,19 +65,19 @@ class CarInterface(CarInterfaceBase):
       ret.safetyParam = 54
       ret.wheelbase = 2.6924
       ret.steerRatio = 13.4  # unknown end-to-end spec
-      ret.steerActuatorDelay = 0.53
+      ret.steerActuatorDelay = 0.538
       tire_stiffness_factor = 0.6371  # hand-tune
       ret.mass = 3115. * CV.LB_TO_KG + STD_CARGO_KG
 
       if prius_use_pid:
-        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.21], [0.008]]
-        ret.lateralTuning.pid.kdV = [1.]  # corolla D times gain in PI values
+        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.05], [0.008]]
+        ret.lateralTuning.pid.kdV = [0.1]  # corolla D times gain in PI values
         ret.lateralTuning.pid.kf = 0.00009531750004645412
         ret.lateralTuning.pid.newKfTuned = True
       else:
         ret.lateralTuning.init('indi')
-        ret.lateralTuning.indi.innerLoopGainV = [3.76]
-        ret.lateralTuning.indi.outerLoopGainV = [3.1]
+        ret.lateralTuning.indi.innerLoopGainV = [3.8]
+        ret.lateralTuning.indi.outerLoopGainV = [3.0]
         ret.lateralTuning.indi.timeConstantV = [0.1] if ret.hasZss else [1.0]
         ret.lateralTuning.indi.actuatorEffectivenessV = [1.0]
 
