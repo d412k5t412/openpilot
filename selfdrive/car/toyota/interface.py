@@ -77,12 +77,13 @@ class CarInterface(CarInterfaceBase):
       else:
         ret.lateralTuning.init('indi')
         ret.lateralTuning.indi.innerLoopGainBP = [16.7, 25, 36.1]
-        ret.lateralTuning.indi.innerLoopGainV = [9.5, 15, 15]
+        ret.lateralTuning.indi.innerLoopGainV = [9.5, 12, 14]
         ret.lateralTuning.indi.outerLoopGainBP = [16.7, 25, 36.1]
         ret.lateralTuning.indi.outerLoopGainV = [9.5, 14.99, 14.99]
         ret.lateralTuning.indi.timeConstantBP = [16.7, 16.71, 22, 22.01, 26, 26.01, 36, 36.01]
         ret.lateralTuning.indi.timeConstantV = [0.5, 1, 1, 2, 2, 4, 4, 5]
-        ret.lateralTuning.indi.actuatorEffectivenessV = [1.0]
+        ret.lateralTuning.indi.actuatorEffectivenessBP = [16.7, 25, 36.1]
+        ret.lateralTuning.indi.actuatorEffectivenessV = [9.5, 15, 15]
 
 
     elif candidate in [CAR.RAV4, CAR.RAV4H]:
