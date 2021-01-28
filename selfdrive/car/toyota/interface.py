@@ -70,16 +70,20 @@ class CarInterface(CarInterfaceBase):
       ret.mass = 3115. * CV.LB_TO_KG + STD_CARGO_KG
 
       if prius_use_pid:
-        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.21], [0.008]]
+        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.05], [0.008]]
         ret.lateralTuning.pid.kdV = [1.]  # corolla D times gain in PI values
         ret.lateralTuning.pid.kf = 0.00009531750004645412
         ret.lateralTuning.pid.newKfTuned = True
       else:
         ret.lateralTuning.init('indi')
-        ret.lateralTuning.indi.innerLoopGainV = [3.84]
-        ret.lateralTuning.indi.outerLoopGainV = [3.06]
-        ret.lateralTuning.indi.timeConstantV = [0.1] if ret.hasZss else [1.0]
-        ret.lateralTuning.indi.actuatorEffectivenessV = [1.0]
+        ret.lateralTuning.indi.innerLoopGainBP = [16.7, 25, 36.1]
+        ret.lateralTuning.indi.innerLoopGainV = [9.5, 15, 15]
+        ret.lateralTuning.indi.outerLoopGainBP = [16.7, 25, 36.1]
+        ret.lateralTuning.indi.outerLoopGainV = [9.5, 14.99, 14.99]
+        ret.lateralTuning.indi.timeConstantBP = [16.7, 16.71, 22, 22.01, 26, 26.01, 36, 36.01]
+        ret.lateralTuning.indi.timeConstantV = [0.5, 1, 1, 2, 2, 4, 4, 5]
+        ret.lateralTuning.indi.actuatorEffectivenessBP = [16.7, 25, 36.1]
+        ret.lateralTuning.indi.actuatorEffectivenessV = [9.5, 15, 15]
 
 
     elif candidate in [CAR.RAV4, CAR.RAV4H]:
