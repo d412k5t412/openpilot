@@ -76,12 +76,13 @@ class CarInterface(CarInterfaceBase):
         ret.lateralTuning.pid.newKfTuned = True
       else:
         ret.lateralTuning.init('indi')
-        ret.lateralTuning.indi.innerLoopGainBP = [16.7, 25, 36.1]
-        ret.lateralTuning.indi.innerLoopGainV = [3.8, 4.0, 4.2]
-        ret.lateralTuning.indi.outerLoopGainBP = [16.7, 25, 36.1]
-        ret.lateralTuning.indi.outerLoopGainV = [3.0, 3.2, 3.4]
-        ret.lateralTuning.indi.timeConstantV = [0.1] if ret.hasZss else [1.0]
-        ret.lateralTuning.indi.actuatorEffectivenessV = [1.0]
+        ret.lateralTuning.indi.innerLoopGainBP = [16.7, 25, 30]
+        ret.lateralTuning.indi.innerLoopGainV = [3.8, 4.0, 4.1]
+        ret.lateralTuning.indi.outerLoopGainBP = [16.7, 25, 30]
+        ret.lateralTuning.indi.outerLoopGainV = [3.0, 3.1, 3.2]
+        ret.lateralTuning.indi.timeConstantV = [0.1] if ret.hasZss else [1.0]        
+        ret.lateralTuning.indi.actuatorEffectivenessBP = [16.7, 25, 30]
+        ret.lateralTuning.indi.actuatorEffectivenessV = [1.0, 1.02, 1.06]
 
 
     elif candidate in [CAR.RAV4, CAR.RAV4H]:
