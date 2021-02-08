@@ -66,6 +66,8 @@ class CarInterface(CarInterfaceBase):
       ret.wheelbase = 2.6924
       ret.steerRatio = 13.4  # unknown end-to-end spec
       ret.steerActuatorDelay = 0.5
+      ret.steerLimitTimer = 5.0
+      ret.steerRateCost = 0.45
       tire_stiffness_factor = 0.6371  # hand-tune
       ret.mass = 3115. * CV.LB_TO_KG + STD_CARGO_KG
 
