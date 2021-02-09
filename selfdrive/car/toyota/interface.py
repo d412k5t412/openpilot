@@ -28,7 +28,7 @@ class CarInterface(CarInterfaceBase):
 
     ret.steerActuatorDelay = 0.12  # Default delay, Prius has larger delay
     ret.steerLimitTimer = 0.4
-    ret.steerRateCost = 1.0
+    ret.steerRateCost = 0.5 if ret.hasZss else 1.0
     ret.hasZss = 0x23 in fingerprint[0]  # Detect whether car has accurate ZSS
 
     CARS_NOT_PID = [CAR.RAV4, CAR.RAV4H]
@@ -66,8 +66,7 @@ class CarInterface(CarInterfaceBase):
       ret.wheelbase = 2.6924
       ret.steerRatio = 13.4  # unknown end-to-end spec
       ret.steerActuatorDelay = 0.5
-      ret.steerLimitTimer = 1.0
-      ret.steerRateCost = 0.5
+      ret.steerLimitTimer = 0.9
       tire_stiffness_factor = 0.6371  # hand-tune
       ret.mass = 3115. * CV.LB_TO_KG + STD_CARGO_KG
 
