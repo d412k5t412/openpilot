@@ -77,12 +77,12 @@ class CarInterface(CarInterfaceBase):
         ret.lateralTuning.pid.newKfTuned = True
       else:
         ret.lateralTuning.init('indi')
-        ret.lateralTuning.indi.innerLoopGainBP = [16.7, 25, 30]
-        ret.lateralTuning.indi.innerLoopGainV = [4.0, 4.06, 4.12]
-        ret.lateralTuning.indi.outerLoopGainBP = [16.7, 25, 30]
-        ret.lateralTuning.indi.outerLoopGainV = [3.0, 3.02, 3.04]
+        ret.lateralTuning.indi.innerLoopGainBP = [15, 20, 27]
+        ret.lateralTuning.indi.innerLoopGainV = [4.0, 4.06, 4.1]
+        ret.lateralTuning.indi.outerLoopGainBP = [15, 20, 27]
+        ret.lateralTuning.indi.outerLoopGainV = [3.0, 3.1, 3.2]
         ret.lateralTuning.indi.timeConstantV = [0.1] if ret.hasZss else [1.0]        
-        ret.lateralTuning.indi.actuatorEffectivenessBP = [16.7, 30]
+        ret.lateralTuning.indi.actuatorEffectivenessBP = [15, 27]
         ret.lateralTuning.indi.actuatorEffectivenessV = [1.0, 1.1]
 
 
