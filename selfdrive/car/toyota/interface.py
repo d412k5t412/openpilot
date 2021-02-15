@@ -66,7 +66,7 @@ class CarInterface(CarInterfaceBase):
       ret.wheelbase = 2.6924
       ret.steerRatio = 13.4  # unknown end-to-end spec
       ret.steerActuatorDelay = 0.51
-      ret.steerLimitTimer = 0.8
+      ret.steerLimitTimer = 0.76
       tire_stiffness_factor = 0.6371  # hand-tune
       ret.mass = 3115. * CV.LB_TO_KG + STD_CARGO_KG
 
@@ -78,7 +78,7 @@ class CarInterface(CarInterfaceBase):
       else:
         ret.lateralTuning.init('indi')
         ret.lateralTuning.indi.innerLoopGainBP = [16.7, 25, 30]
-        ret.lateralTuning.indi.innerLoopGainV = [4.0, 4.06, 4.14]
+        ret.lateralTuning.indi.innerLoopGainV = [4.0, 4.06, 4.12]
         ret.lateralTuning.indi.outerLoopGainBP = [16.7, 25, 30]
         ret.lateralTuning.indi.outerLoopGainV = [3.0, 3.02, 3.04]
         ret.lateralTuning.indi.timeConstantV = [0.1] if ret.hasZss else [1.0]        
