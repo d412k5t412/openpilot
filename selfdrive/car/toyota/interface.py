@@ -65,7 +65,7 @@ class CarInterface(CarInterfaceBase):
       ret.safetyParam = 54
       ret.wheelbase = 2.6924
       ret.steerRatio = 13.4  # unknown end-to-end spec
-      ret.steerActuatorDelay = 0.51
+      ret.steerActuatorDelay = 0.5
       ret.steerLimitTimer = 0.76
       tire_stiffness_factor = 0.6371  # hand-tune
       ret.mass = 3115. * CV.LB_TO_KG + STD_CARGO_KG
@@ -80,10 +80,10 @@ class CarInterface(CarInterfaceBase):
         ret.lateralTuning.indi.innerLoopGainBP = [15, 20, 27]
         ret.lateralTuning.indi.innerLoopGainV = [4.0, 4.06, 4.1]
         ret.lateralTuning.indi.outerLoopGainBP = [15, 20, 27]
-        ret.lateralTuning.indi.outerLoopGainV = [3.0, 3.1, 3.2]
+        ret.lateralTuning.indi.outerLoopGainV = [3.0, 3.04, 3.08]
         ret.lateralTuning.indi.timeConstantV = [0.1] if ret.hasZss else [1.0]        
         ret.lateralTuning.indi.actuatorEffectivenessBP = [15, 27]
-        ret.lateralTuning.indi.actuatorEffectivenessV = [1.0, 1.1]
+        ret.lateralTuning.indi.actuatorEffectivenessV = [1.0, 1.02]
 
 
     elif candidate in [CAR.RAV4, CAR.RAV4H]:
