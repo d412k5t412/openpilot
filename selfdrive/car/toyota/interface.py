@@ -78,7 +78,7 @@ class CarInterface(CarInterfaceBase):
       else:
         ret.lateralTuning.init('indi')
         ret.lateralTuning.indi.innerLoopGainBP = [15, 27]
-        ret.lateralTuning.indi.innerLoopGainV = [4.0, 4.6]
+        ret.lateralTuning.indi.innerLoopGainV = [4.0, 4.06]
         ret.lateralTuning.indi.outerLoopGainBP = [15, 27]
         ret.lateralTuning.indi.outerLoopGainV = [3.0, 3.04]
         ret.lateralTuning.indi.timeConstantV = [0.1] if ret.hasZss else [1.0]        
