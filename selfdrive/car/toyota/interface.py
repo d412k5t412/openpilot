@@ -71,7 +71,7 @@ class CarInterface(CarInterfaceBase):
       ret.mass = 3115. * CV.LB_TO_KG + STD_CARGO_KG
 
       if prius_use_pid:
-        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.05], [0.008]]
+        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.06], [0.01]]
         ret.lateralTuning.pid.kdV = [1.]  # corolla D times gain in PI values
         ret.lateralTuning.pid.kf = 0.00009531750004645412
         ret.lateralTuning.pid.newKfTuned = True
@@ -80,7 +80,7 @@ class CarInterface(CarInterfaceBase):
         ret.lateralTuning.indi.innerLoopGainBP = [15, 27]
         ret.lateralTuning.indi.innerLoopGainV = [4.0, 4.06]
         ret.lateralTuning.indi.outerLoopGainBP = [15, 27]
-        ret.lateralTuning.indi.outerLoopGainV = [3.0, 3.04]
+        ret.lateralTuning.indi.outerLoopGainV = [3.0, 3.02]
         ret.lateralTuning.indi.timeConstantV = [0.1] if ret.hasZss else [1.0]        
         ret.lateralTuning.indi.actuatorEffectivenessBP = [15, 27]
         ret.lateralTuning.indi.actuatorEffectivenessV = [1.0, 1.02]
