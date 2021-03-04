@@ -82,7 +82,7 @@ class CarInterface(CarInterfaceBase):
         ret.lateralTuning.indi.outerLoopGainV = [3.0, 3.02]
         ret.lateralTuning.indi.timeConstantV = [0.1] if ret.hasZss else [1.0]        
         ret.lateralTuning.indi.actuatorEffectivenessBP = [15]
-        ret.lateralTuning.indi.actuatorEffectivenessV = [2.0]
+        ret.lateralTuning.indi.actuatorEffectivenessV = [1.6]
 
 
     elif candidate in [CAR.RAV4, CAR.RAV4H]:
