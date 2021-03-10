@@ -86,7 +86,7 @@ class CarInterface(CarInterfaceBase):
       ret.safetyParam = 54
       ret.wheelbase = 2.6924
       ret.steerRatio = 13.4  # unknown end-to-end spec
-      ret.steerActuatorDelay = 0.50
+      ret.steerActuatorDelay = 0.30
       tire_stiffness_factor = 0.6371  # hand-tune
       ret.mass = 3115. * CV.LB_TO_KG + STD_CARGO_KG
 
